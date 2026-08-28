@@ -1,0 +1,16 @@
+# common/subject_military_stances（附庸军事姿态）
+
+来源：`in_game\common\subject_military_stances\readme.txt`
+
+## 用途
+
+配置附庸对宗主 AI 的军事帮助（各行为优先级，float）。
+
+## 字段（全部为 <float> 优先级）
+
+chase_unit_own_location_priority（自身/附庸/宗主领地追击）、chase_unit_overlord_location_priority、chase_unit_subject_location_priority、chase_unit_friendly_location_priority（其他友好领地）、chase_unit_neutral_location_priority、chase_unit_enemy_location_priority、chase_navy_priority、hunt_army_priority、hunt_navy_priority、defend_own_territory_priority、defend_ally_territory_priority、merge_units_priority、hunt_pirates_priority、repatriate_ships_priority、repatriate_troops_priority、support_armies_priority、maintain_military_levels_priority（招募）、carpet_siege_own_locations_attacking_priority、carpet_siege_own_locations_defending_priority、carpet_siege_enemy_locations_priority、blockade_port_priority、blockade_strait_priority（仅己方海上优势时激活）、suppress_rebel_priority、army_logistics_priority、navy_logistics_priority
+
+## 审查要点
+
+- 全部为 float 优先级值。
+- 未在 readme 中说明：本地化键格式。
