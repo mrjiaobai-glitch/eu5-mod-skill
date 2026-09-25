@@ -1,6 +1,6 @@
 ---
 name: eu5-mod-review
-description: EU5（jomini 引擎）模组全流程：制作与审查一体。制作侧：搭建 mod 骨架（metadata.json 注册、三区 common、localization 放置与 BOM）、按游戏本体文件约定编写事件/效果/触发器/修正/单位/建筑等脚本、正确使用 INJECT/REPLACE 合并与本地化镜像、用游戏自带测试与 error.log 排错；审查侧：检查语法结构、作用域、具名 scope、var 变量体系、本地化键前缀规则、BOM 双镜像、合并前缀、括号配对，并对照原版 game 目录验证词条/ID 存在性，输出分级结构化自检报告。另含原版机制解析（vanilla-*.md：天气/战斗/POP/天命天朝，标注可改点与硬编码边界）。全部知识基于游戏本体目录实际文件（74 个 readme 字段库 + 制作层知识库 + 机制解析库），索引见 references\README.md
+description: EU5（jomini 引擎）模组全流程：制作与审查一体。制作侧：搭建 mod 骨架（metadata.json 注册、三区 common、localization 放置与 BOM）、按游戏本体文件约定编写事件/效果/触发器/修正/单位/建筑等脚本、正确使用 INJECT/REPLACE 合并与本地化镜像、用游戏自带测试与 error.log 排错；审查侧：检查语法结构、作用域、具名 scope、var 变量体系、本地化键前缀规则、BOM 双镜像、合并前缀、括号配对，并对照原版 game 目录验证词条/ID 存在性，输出分级结构化自检报告。另含原版机制解析（vanilla-*.md：天气/战斗/POP/天命天朝/科技与时代，标注可改点与硬编码边界）。全部知识基于游戏本体目录实际文件（74 个 readme 字段库 + 制作层知识库 + 机制解析库），索引见 references\README.md
 whenToUse: 用户要求新建/制作/编写/扩展/审查/检查/自检/验证 EU5 模组内容（事件、科技、建筑、单位、修正、国家、本地化、游戏规则、define 调整等），或询问"怎么做 X"需要按原版规范落地时
 disable-model-invocation: false
 ---
@@ -34,7 +34,7 @@ disable-model-invocation: false
 - **事件**：`references\event-making.md`（权威格式 = `in_game\events\readme.txt` 逐条 + `volcano_events.txt` 真实样例）。要点：`namespace` 必定义、ID 1–9999 全局唯一、type 五选一（country/location/unit/exploration/age_event）、title/desc 键 = `<ns>.<id>.title/.desc`、选项 name = `<ns>.<id>.a`、ai_chance 用 base/add。
 - **效果/触发器/脚本值/on_action**：`references\scripting-core.md`（`_script_values.info` 全文要点、scripted_effects/triggers 的 `$参数$` 约定、on_actions.info 全部键）。
 - **各 common 类目**：先看 `references\systems-map.md`（每类目：用途、入口文件、readme 位置、对应字段文档），再加载字段文档核对，照原版样例复制改。
-- **改机制数值/结构前**：先读对应 `references\vanilla-*.md` 原版解析（weather / combat / pop / mandate-of-heaven），里面写清了该系统由哪些文件组成、关键常量在哪、**哪些脚本可改、哪些引擎硬编码**、以及挂钩点；避免改错层（例如天气的风暴实际效果是硬编码，只能改生成与 `on_storm_reached_location`）。
+- **改机制数值/结构前**：先读对应 `references\vanilla-*.md` 原版解析（weather / combat / pop / mandate-of-heaven / tech-and-age），里面写清了该系统由哪些文件组成、关键常量在哪、**哪些脚本可改、哪些引擎硬编码**、以及挂钩点；避免改错层（例如天气的风暴实际效果是硬编码，只能改生成与 `on_storm_reached_location`；时代按年份全局推进，`unique` 与 `modifier` 都是全世界生效的时代修正）。
 - **修正（modifier）**：新增修正键必须在 `main_menu\common\modifier_type_definitions\00_modifier_types.txt` 注册（category/percent/boolean/format 等），再在 `main_menu\common\static_modifiers\` 定义或直接用于效果。
 - **define 调整**：`loading_screen\common\defines\00_defines.txt`（N 块索引见 `references\defines.md`）或 `graphic\00_graphics.txt`；也可在 game_rules 里按设置覆盖（`_game_rules.info` 的 defines 段）。
 
