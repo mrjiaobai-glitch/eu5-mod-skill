@@ -99,6 +99,7 @@
 | `vanilla-combat.md` | 战斗：单位类别与 6 时代模板数值表、NCombat 全常量（骰子·阶段·正面宽度·主动性·战斗速度·侧翼·士气·经验）、地形 `defender` 骰子加成表、围城三部曲（短缺·轰炸·强攻）、战争目标、`on_battle_*` 钩子与 AI 常量 | `defines\00_defines.txt` NCombat+NUnit、`common\unit_categories\`、`unit_types\`、`wargoals\`、`script_values\garrison.txt` |
 | `vanilla-pop.md` | POP：8 类型对照表（粮食/晋升/同化/识字率产出）、增长·晋升（就业系统）·迁移·同化改宗四循环、满意度与叛乱阈值、阶层三套修正块（satisfaction·high_power·low_power）、经济与军事作用、界面与触发器 | `common\pop_types\`、`estates\`、`employment_systems\`、`defines` NPop+NCharacter、`auto_modifiers\country.txt` |
 | `vanilla-mandate-of-heaven.md` | 天命与天朝 IO：术语对照（**宣称天命 CB vs 夺取天命和约**）、天朝 IO 全字段、三条入会路径与 `can_join_trigger` 五条件、宣称天命条件与 10 个月酝酿、夺取天命成本与登基效果、天朝威仪与中华王朝危机、朝贡体系（皇帝是付款方）与天朝总督 | `international_organizations\middle_kingdom.txt`、`casus_belli\unify_china.txt`、`peace_treaties\take_mandate_of_heaven.txt`、`laws\20_middle_kingdom.txt`、`disasters\crisis_of_the_chinese_dynasty.txt` |
+| `vanilla-tech-and-age.md` | 科技与时代：**术语对照（advance=革新／institution=思潮，非"科技/制度"）**、6 时代表（年份/区间/经济参数）、时代推进与 `ages_of_eu.1` 专精三选一、**`modifier`（递进骨架）vs `unique`（时代独有、全世界生效，实测确认非 readme）**、思潮诞生/9 条传播通道速率表/接纳、革新 3178 条规模与全字段、研究进度四要素（礼仪语言力量·识字率·教士满意度·思潮数）、`BASE_RESEARCH_COST` 等四常量 | `common\age\00_default.txt`、`common\institution\`、`common\advances\`（readme 权威）、`events\ages.txt`、`script_values\institution_spread.txt`、`defines:190-193` |
 
 ## 铁律
 
