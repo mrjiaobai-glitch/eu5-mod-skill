@@ -70,3 +70,4 @@ option = {
 - ID 数字 1–9999 且全局唯一。
 - `ai_chance` 结构为 `base` + `modifier { add }`（勿写 value 键）。
 - 未在 readme 中说明：character_event（旧技能曾列）不在 type 枚举中——以本 readme 为准。
+- `outcome` 只取 `positive/neutral/negative`（默认 neutral）。原版 26 个事件文件实测分布：neutral 337 / negative 94 / positive 4 —— **`negative` 是合法常用值**，审查时勿判成错误（旧技能文案"good/bad 无效"曾被误读为"只能 neutral"）。
