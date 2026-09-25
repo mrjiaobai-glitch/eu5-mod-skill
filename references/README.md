@@ -35,7 +35,7 @@
 | common/institution | `common-institution.md` | 制度（can_spawn root=location、spread 系列） |
 | common/international_organizations + international_organization_land_ownership_rules + international_organization_payments + international_organization_special_statuses | `common-international_organizations.md` | IO 全套：字段、IO/country/location 作用域脚本、土地/支付/特殊状态 |
 | common/join_war_rules | `common-join_war_rules.md` | 参战规则（scope:war/first_leader/second_leader） |
-| common/laws | `common-laws.md` | 法律与政策（law 容器、policy 覆盖 IO 字段语义） |
+| common/laws | `common-laws.md` | 法律与政策（law 容器、policy 覆盖 IO 字段语义）——**制作/设计另加载 `law-design.md`** |
 | common/levies | `common-levies.md` | 征召（**特化单位必须放文件顶部**） |
 | common/movements | `common-movements.md` | 思潮（required_* 门槛、religion/culture 二选一、spread 规则） |
 | common/parliament_agendas, parliament_issues, parliament_types | `common-parliament.md` | 议会三件套（type 决定 root 作用域） |
@@ -69,6 +69,7 @@
 | main_menu/common/static_modifiers | `main_menu-static_modifiers.md` | 静态修正（game_data category 枚举、decaying/remove_if） |
 | 审查清单辅助（非 readme 提炼） | `audit-ids.md` | SKILL.md 第 5 节 ID 目录与核对规则（源自实测经验），审查引用类 ID 时加载 |
 | 实测经验（非 readme 提炼） | `blades-and-thrones-2026-08.md` | 2026-08《刀锋与王座》实测重大坑：country_has_estate 恒真、军队国碎国、num_forts 量级、EU4 语法混入、社会价值轴 progress modifier、存档分析法等 |
+| 实测经验（非 readme 提炼） | `laws-events-and-estates-2026-09.md` | 2026-09 复核：**法律/改革 potential 失效即自动撤销**、事件触发路径语义（控制台绕过 trigger）、选项预览执行副作用、阶层力量两个反直觉特性（存量概念 / 占满人口的阶层）、事件自检清单、审查脚本假失败对策 |
 
 ## 制作层知识库（eu5-mod-maker 并入，全部基于游戏本体实查）
 
@@ -82,14 +83,28 @@
 | `event-making.md` | 事件**制作**模板：全字段速查 + volcano/qa_debug 真实样例 + 触发方式 | `in_game\events\readme.txt`、`volcano_events.txt`、`debug\qa_debug.txt`（字段权威另见 `common-events.md`） |
 | `scripting-core.md` | 核心脚本体系：script_values 公式（_script_values.info 全文要点）、scripted_effects/triggers $参数$、on_action 定义全键、作用域与变量 | `script_values\_script_values.info`、`scripted_effects\readme.txt`、`on_action\on_actions.info` |
 | `systems-map.md` | common 类目全地图：~160 个类目分组、入口文件、readme 有无标注 | `in_game\common\` 全目录实查 + 73 个 readme 位置 |
+| `law-design.md` | **法律设计与落地**：readme 未声明但确认可用的字段（`law_category`／`estate_preferences`／`current_age_or_later`）、名称即 loc 键、解锁链三处同步、政策三件套配方、**通用池只有 5~9 条**（大法律靠 tag 门控堆）、时代阶梯与三筛规则、命名三禁与撞名检查 | 2026-09 实修 + `in_game\common\laws\` 逐块实查 |
 | `defines.md` | defines 体系：00_defines.txt 的 N 块索引（NGame/NCombat/NPop/NUnit/NWeather…）、graphic/jomini defines、game_rules 覆盖 defines | `loading_screen\common\defines\` 实查 |
 | `localization.md` | 本地化制作：BOM、l_english 头、键前缀、占位符、语言文件真实位置与镜像 | `main_menu\localization\english\` 实查（键前缀全表另见 `loc-keys.md`） |
 | `testing.md` | 游戏自带测试系统（common/tests）、error.log 排错（Script location）、debug 事件模板、观察者验证 | `common\tests\readme.txt`、`events\debug\qa_debug.txt` |
 | `pitfalls.md` | 实测坑速查：EU4→EU5 语法对照、作用域/变量/合并/灾难重复坑、本库翻阅观察 | `eu5-mod-review` 实测 + 翻阅观察 |
+
+## 原版机制解析（vanilla-*.md，机制逆向解析）
+
+**用途**：改机制前先读它——搞清"这个系统由哪些文件组成、数值在哪、哪些脚本可改、哪些是引擎硬编码、挂钩点在哪"。每篇标注实查文件与行号（1.3.x 基准）与 mod 改造建议。
+
+| 文档 | 内容 | 核心文件 |
+|---|---|---|
+| `vanilla-weather.md` | 天气与气候：8 气候带（winter 等级/降水/常驻修正）、`weather_monthly_pulse` 季风·飓风·极地涡旋·沙尘暴全分支、`start_weather_system` 三类型参数、NWeather 衰减常量、地形三个 `weather_*_strength_change_percent`（原版全 0 = 可改空档）、`on_storm_reached_location` 钩子 | `common\climates\`、`on_action\location_pulses.txt`、`defines\00_defines.txt` NWeather、`topography\`+`vegetation\` |
+| `vanilla-combat.md` | 战斗：单位类别与 6 时代模板数值表、NCombat 全常量（骰子·阶段·正面宽度·主动性·战斗速度·侧翼·士气·经验）、地形 `defender` 骰子加成表、围城三部曲（短缺·轰炸·强攻）、战争目标、`on_battle_*` 钩子与 AI 常量 | `defines\00_defines.txt` NCombat+NUnit、`common\unit_categories\`、`unit_types\`、`wargoals\`、`script_values\garrison.txt` |
+| `vanilla-pop.md` | POP：8 类型对照表（粮食/晋升/同化/识字率产出）、增长·晋升（就业系统）·迁移·同化改宗四循环、满意度与叛乱阈值、阶层三套修正块（satisfaction·high_power·low_power）、经济与军事作用、界面与触发器 | `common\pop_types\`、`estates\`、`employment_systems\`、`defines` NPop+NCharacter、`auto_modifiers\country.txt` |
+| `vanilla-mandate-of-heaven.md` | 天命与天朝 IO：术语对照（**宣称天命 CB vs 夺取天命和约**）、天朝 IO 全字段、三条入会路径与 `can_join_trigger` 五条件、宣称天命条件与 10 个月酝酿、夺取天命成本与登基效果、天朝威仪与中华王朝危机、朝贡体系（皇帝是付款方）与天朝总督 | `international_organizations\middle_kingdom.txt`、`casus_belli\unify_china.txt`、`peace_treaties\take_mandate_of_heaven.txt`、`laws\20_middle_kingdom.txt`、`disasters\crisis_of_the_chinese_dynasty.txt` |
 
 ## 铁律
 
 1. **一切以游戏本体为准**：写任何词条前先 grep 游戏本体确认存在/用法，禁止凭 EU4 记忆补。
 2. **EU5 ≠ EU4**：无 ROOT/PREV、无 event_target、无 `KEY:0`、选项无 weight、作用域词 root/prev/this。
 3. **字段不确定 → 查 readme**：73 个 `readme.txt` + `_script_values.info` + `on_actions.info` + `_game_rules.info` 是官方权威说明，都在游戏本体里。
-4. 制作完成后用本 skill 的审查流程自检。
+4. **命名先查撞名**：新增法律／政策／建筑／改革前，**显示名与键名都**对照本体 `main_menu\localization\simp_chinese\` 查一遍。通用（无条件解锁）内容禁汉典专名、禁现代公文构词、禁文明专名——详见 `law-design.md` 第八、九节。
+5. **数值先查分布**：新增修正值前先抽取本体该修正的取值分布、取众数、吸附到实际出现过的精确值，禁止凭印象写数——详见 `pitfalls.md` 第十节。
+6. 制作完成后用本 skill 的审查流程自检。
