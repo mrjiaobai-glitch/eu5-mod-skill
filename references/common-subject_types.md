@@ -53,3 +53,10 @@
 - 各 trigger root 不同（visible 是 overlord；can_attack 是 subject type）——混用作用域是高频错误。
 - `type` 枚举：location/pop/building/army；`on_overlord_becomes_a_subject` 枚举：cancel_subjects/transfer_subjects/nothing。
 - 未在 readme 中说明：本地化键格式（实测见 SKILL.md 第 6 节：顶层键即 loc 键 + `LEAD_<名>`/`AM_<名>`）。
+
+## subject_pays 实现（属国每月付宗主，2026-09 实测）
+
+- 字段写法：`subject_pays = <price 键>`（原版裸键引用，如 `subject_pays = subject_pays_vassal`）。
+- price 定义在 `in_game\common\prices\`（原版 03_diplomacy.txt 顶部）：`scaled_gold = 0.2` = 附庸月收入 20% 自动转宗主；可配 `scaled_manpower`/`scaled_sailors` 同时抽人力/水手；`ignore_inflation = yes` 防通胀缩放。原版比例：vassal 0.2 / colonial 0.025(+水手人力 0.1) / tributary 0.2(+0.05+0.05) / march 0.1 / trade_company 0.5 / pronoia 0.2。
+- mod 自定义：新建 `in_game\common\prices\zzz_*.txt` 定义自有 price（scaled_gold 比例或 `gold = N` 固定额）→ subject type 里改指。
+- 注意与 overlord_modifier 的 `monthly_gold_income`（拨款/收费修正）是两套独立机制，可并存（拨款 + 缴税双轨）。
